@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Novo Estabelecimento</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <%- include('../partials/header') %>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-body p-4">
+            <h3 class="mb-4"><i class="bi bi-plus-circle"></i> Cadastrar Estabelecimento</h3>
+
+            <form id="form-novo" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <input type="text" class="form-control" name="nome" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Endereço</label>
+                <input type="text" class="form-control" name="endereco" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Categoria</label>
+                <select class="form-select" name="categoria" required>
+                  <option value="">Selecione...</option>
+                  <option>Salgado</option>
+                  <option>Marmita</option>
+                  <option>Suco</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Foto</label>
+                <input type="file" class="form-control" name="foto" accept="image/*">
+              </div>
+
+              <button type="submit" class="btn btn-success w-100">
+                <i class="bi bi-check-circle"></i> Cadastrar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $('#form-novo').on('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      $.ajax({
+        url: '/api/estabelecimentos',
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: () => {
+          alert('Estabelecimento cadastrado!');
+          window.location.href = '/proprietario/meus-estabelecimentos';
+        },
+        error: (xhr) => alert('Erro: ' + (xhr.responseJSON?.error || 'tente novamente'))
+      });
+    });
+  </script>
+</body>
+</html>

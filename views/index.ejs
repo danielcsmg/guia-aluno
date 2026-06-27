@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia do Aluno</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="/css/estrelas.css" rel="stylesheet">
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+    <div class="container">
+      <% if (usuario && usuario.tipo==='proprietario' ) { %>
+        <a href="/estabelecimentos/novo" class="btn btn-success mb-3">
+          <i class="bi bi-plus-circle"></i> Novo Estabelecimento
+        </a>
+        <% } else { %>
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            Olá, <strong>
+              <%= usuario.nome %>
+            </strong>! Explore os estabelecimentos e deixe sua avaliação.
+          </div>
+          <% } %>
+
+            <div id="lista-estabelecimentos" class="row"></div>
+    </div>
+
+    <div class="container">
+      <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalCadastro">
+        <i class="bi bi-plus-circle"></i> Novo Estabelecimento
+      </button>
+
+      <div id="lista-estabelecimentos" class="row"></div>
+    </div>
+
+    <!-- Modal de Cadastro -->
+    <div class="modal fade" id="modalCadastro" tabindex="-1">
+      <div class="modal-dialog">
+        <form id="form-cadastro" enctype="multipart/form-data">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Cadastrar estabelecimento</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <input type="text" class="form-control mb-2" name="nome" placeholder="Nome" required>
+              <input type="text" class="form-control mb-2" name="endereco" placeholder="Endereço" required>
+              <select class="form-select mb-2" name="categoria" required>
+                <option value="">Categoria</option>
+                <option>Salgado</option>
+                <option>Marmita</option>
+                <option>Suco</option>
+              </select>
+              <input type="file" class="form-control" name="foto" accept="image/*">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

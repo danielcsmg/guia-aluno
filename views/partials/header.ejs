@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a href="/" class="navbar-brand">
+      <i class="bi bi-utensils"></i> Guia do Aluno
+    </a>
+
+    <% if (usuario) { %>
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="bi bi-house"></i> Início
+          </a>
+        </li>
+
+        <% if (usuario.tipo === 'proprietario') { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/proprietario/meus-estabelecimentos">
+              <i class="bi bi-shop"></i> Meus Estabelecimentos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/estabelecimentos/novo">
+              <i class="bi bi-plus-circle"></i> Cadastrar Local
+            </a>
+          </li>
+        <% } %>
+      </ul>
+
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-light">
+          <% if (usuario.tipo === 'proprietario') { %>
+            <i class="bi bi-shop text-success"></i>
+          <% } else { %>
+            <i class="bi bi-mortarboard text-info"></i>
+          <% } %>
+          <%= usuario.nome %>
+          <small class="badge bg-secondary ms-1">
+            <%= usuario.tipo === 'proprietario' ? 'Proprietário' : 'Aluno' %>
+          </small>
+        </span>
+        <a href="/logout" class="btn btn-outline-light btn-sm">
+          <i class="bi bi-box-arrow-right"></i> Sair
+        </a>
+      </div>
+    <% } %>
+  </div>
+</nav>
+
+<% if (mensagens.erro && mensagens.erro.length > 0) { %>
+  <div class="container">
+    <div class="alert alert-danger alert-dismissible fade show">
+      <%= mensagens.erro[0] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  </div>
+<% } %>
+
+<% if (mensagens.sucesso && mensagens.sucesso.length > 0) { %>
+  <div class="container">
+    <div class="alert alert-success alert-dismissible fade show">
+      <%= mensagens.sucesso[0] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  </div>
+<% } %>
